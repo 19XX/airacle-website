@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이라클(Airacle) - 진정한 개인 맞춤 AI 사주 운세</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 25%, #2d2d2d 50%, #1a1a1a 75%, #000000 100%);
+            min-height: 100vh;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 80px 0 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .logo {
+            max-width: 150px;
+            max-height: 150px;
+            width: auto;
+            height: auto;
+            margin: 0 auto 30px;
+            display: block;
+            object-fit: contain;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #D4AF37, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: #cccccc;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .download-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(45deg, #D4AF37, #FFD700);
+            color: #000000;
+            text-decoration: none;
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+            border: none;
+            cursor: pointer;
+        }
+
+        .download-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.6);
+        }
+
+        .secondary-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .secondary-button:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: #D4AF37;
+            transform: translateY(-2px);
+        }
+
+        .features-section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            color: #D4AF37;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #D4AF37, #FFD700);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #D4AF37;
+        }
+
+        .feature-description {
+            color: #cccccc;
+            line-height: 1.7;
+        }
+
+        .highlight-section {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(255, 215, 0, 0.05));
+            border-radius: 30px;
+            padding: 60px 40px;
+            text-align: center;
+            margin: 80px 0;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .highlight-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #D4AF37;
+        }
+
+        .highlight-text {
+            font-size: 1.2rem;
+            color: #ffffff;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #D4AF37;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #cccccc;
+            font-size: 1.1rem;
+        }
+
+        .testimonials-section {
+            padding: 80px 0;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #ffffff;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            color: #D4AF37;
+            font-weight: 600;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 60px 0 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 80px;
+        }
+
+        .footer-text {
+            color: #888888;
+            margin-bottom: 20px;
+        }
+
+        .copyright {
+            color: #666666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 20%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero-section">
+            <div class="floating-elements">
+                <div class="floating-element">✦</div>
+                <div class="floating-element">✧</div>
+                <div class="floating-element">✦</div>
+            </div>
+            
+            <img src="airacle.png" alt="아이라클 로고" class="logo">
+            <h1 class="hero-title">아이라클</h1>
+            <p class="hero-subtitle">
+                천 년 전통 명리학의 정밀함과 최신 AI 기술의 지혜를 융합한<br>
+                <strong>진정한 개인 맞춤 운세 서비스</strong>
+            </p>
+            
+            <div class="cta-buttons">
+                <a href="#" class="download-button">
+                    📱 App Store에서 다운로드
+                </a>
+                <a href="#" class="secondary-button">
+                    🤖 Google Play에서 다운로드
+                </a>
+            </div>
+        </div>
+
+        <div class="features-section">
+            <h2 class="section-title">왜 아이라클이 특별한가?</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🧮</span>
+                    <h3 class="feature-title">정밀한 사주 계산</h3>
+                    <p class="feature-description">
+                        전통 명리학의 정확한 계산 공식을 AI로 구현하여, 
+                        개인의 실제 사주 데이터를 완벽 분석합니다.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">🤖</span>
+                    <h3 class="feature-title">AI 무당 상담</h3>
+                    <p class="feature-description">
+                        40년 경력 무당 수준의 개인 맞춤 상담을 제공합니다.
+                        연애, 직업, 금전 등 모든 고민에 대해 답변합니다.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">💕</span>
+                    <h3 class="feature-title">정밀한 궁합 분석</h3>
+                    <p class="feature-description">
+                        오행, 간지, 십신, 용신을 종합 분석하여 
+                        정확한 궁합 점수와 상세한 해석을 제공합니다.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">🎯</span>
+                    <h3 class="feature-title">개인별 행운 요소</h3>
+                    <p class="feature-description">
+                        사주 용신에 따른 맞춤형 행운 색상, 숫자, 아이템을 
+                        매일 제공하여 실용적인 운세를 경험하세요.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">📊</span>
+                    <h3 class="feature-title">실시간 운세 점수</h3>
+                    <p class="feature-description">
+                        일일/주간/월간/연간 운세를 0-100점 명리학적 점수로 
+                        제공하여 객관적인 운세 평가가 가능합니다.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">🔒</span>
+                    <h3 class="feature-title">완벽한 개인정보 보호</h3>
+                    <p class="feature-description">
+                        Row Level Security와 JWT 인증으로 개인정보를 
+                        완벽하게 보호하며, 90일 후 자동 데이터 정리됩니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="highlight-section">
+            <h3 class="highlight-title">업계 최고 수준의 개인화</h3>
+            <p class="highlight-text">
+                다른 운세 앱들과 달리, 아이라클은 모든 사용자에게 동일한 일반적인 운세를 제공하지 않습니다. 
+                각 개인의 실제 사주 데이터를 완벽 분석하여 진정한 맞춤형 운세를 제공하는 
+                <strong>업계 최고 수준의 개인화 플랫폼</strong>입니다.
+            </p>
+        </div>
+
+        <div class="stats-section">
+            <div class="stat-item">
+                <div class="stat-number">4</div>
+                <div class="stat-label">완벽 구현된 탭</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100</div>
+                <div class="stat-label">명리학적 정확도</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">40</div>
+                <div class="stat-label">년 경력 무당 수준</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">개인 맞춤 상담</div>
+            </div>
+        </div>
+
+        <div class="testimonials-section">
+            <h2 class="section-title">사용자들의 생생한 후기</h2>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "정말 개인 맞춤 운세가 맞나요? 너무 정확해서 놀랐어요. 
+                        AI CHAN이 제 상황을 완벽하게 이해하고 답변해주더라구요!"
+                    </p>
+                    <div class="testimonial-author">- 김○○님 (28세)</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "궁합 분석이 정말 상세해요. 단순한 점수가 아니라 
+                        왜 그런지 이유까지 설명해주니까 이해가 잘 되네요."
+                    </p>
+                    <div class="testimonial-author">- 박○○님 (32세)</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "매일 다른 행운 색상과 숫자를 알려주니까 
+                        실제로 행운이 따르는 것 같아요. 신기해요!"
+                    </p>
+                    <div class="testimonial-author">- 이○○님 (25세)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="highlight-section">
+            <h3 class="highlight-title">지금 바로 시작하세요</h3>
+            <p class="highlight-text">
+                신규 가입 시 <strong>300 토큰을 무료로 지급</strong>합니다!<br>
+                AI CHAN 상담, 궁합 분석, 행운 번호 등 모든 기능을 무료로 체험해보세요.
+            </p>
+            
+            <div class="cta-buttons" style="margin-top: 40px;">
+                <a href="#" class="download-button">
+                    🚀 지금 다운로드
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-text">
+                <strong>아이라클(Airacle)</strong> - 진정한 개인 맞춤 운세의 새로운 기준<br>
+                천 년 전통 명리학 × 최신 AI 기술
+            </div>
+            <div class="copyright">
+                © 2024 아이라클 개발팀. All Rights Reserved.
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
